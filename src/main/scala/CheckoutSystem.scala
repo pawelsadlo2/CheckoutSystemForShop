@@ -13,6 +13,16 @@ object CheckoutSystem {
     }
   }
 
+  def orangeOffer(boughtProducts: List[String]): List[String] = {
+    val noOfOranges = boughtProducts.count(_ == "Orange")
+    if(noOfOranges < 3) boughtProducts
+    else noOfOranges % 3 match {
+      case 0 => boughtProducts.filter(_ != "Orange") ++ List.fill(noOfOranges * 2/3)("Orange")
+      case 1 => boughtProducts.filter(_ != "Orange") ++ List.fill((noOfOranges * 2 + 1)/3)("Orange")
+      case 2 => boughtProducts.filter(_ != "Orange") ++ List.fill((noOfOranges + 1) * 2 / 3)("Orange")
+    }
+  }
+
   def main(args: Array[String]): Unit = {
     val boughtProducts: List[String] = List("Apple", "Apple", "Orange", "Apple")
 
