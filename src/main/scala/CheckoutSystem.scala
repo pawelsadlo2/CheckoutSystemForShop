@@ -9,20 +9,22 @@ object CheckoutSystem {
     Future(boughtProducts.map(Products(_)).sum.setScale(2, BigDecimal.RoundingMode.HALF_UP))
 
   def appleOffer(noOfApples: Int): List[String] = {
-    if(noOfApples == 0) List()
+    val noOfApplesAfterPromo = if(noOfApples == 0) 0
     else noOfApples % 2 match {
-      case 0 => List.fill(noOfApples / 2)("Apple")
-      case 1 => List.fill((noOfApples + 1) / 2)("Apple")
+      case 0 => noOfApples / 2
+      case 1 => (noOfApples + 1) / 2
     }
+    List.fill(noOfApplesAfterPromo)("Apple")
   }
 
   def orangeOffer(noOfOranges: Int): List[String] = {
-    if(noOfOranges < 3) List.fill(noOfOranges)("Orange")
+    val noOfOrangesAfterPromo = if(noOfOranges < 3) noOfOranges
     else noOfOranges % 3 match {
-      case 0 => List.fill(noOfOranges * 2 / 3)("Orange")
-      case 1 => List.fill((noOfOranges * 2 + 1) / 3)("Orange")
-      case 2 => List.fill((noOfOranges + 1) * 2 / 3)("Orange")
+      case 0 => noOfOranges * 2 / 3
+      case 1 => (noOfOranges * 2 + 1) / 3
+      case 2 => (noOfOranges + 1) * 2 / 3
     }
+    List.fill(noOfOrangesAfterPromo)("Orange")
   }
 
   def main(args: Array[String]): Unit = {
