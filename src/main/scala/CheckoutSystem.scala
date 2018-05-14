@@ -1,8 +1,10 @@
 object CheckoutSystem {
   val Products: Map[String, BigDecimal] = Map("Apple" -> 0.60, "Orange" -> 0.25)
 
-  def costOfProducts(boughtProducts: List[String]): BigDecimal =
-    boughtProducts.map(Products(_)).sum.setScale(2, BigDecimal.RoundingMode.HALF_UP)
+  def costOfProducts(boughtProducts: List[String]): BigDecimal = {
+    val productsAfterOffers = orangeOffer(appleOffer(boughtProducts))
+    productsAfterOffers.map(Products(_)).sum.setScale(2, BigDecimal.RoundingMode.HALF_UP)
+  }
 
   def appleOffer(boughtProducts: List[String]): List[String] = {
     val noOfApples = boughtProducts.count(_ == "Apple")
