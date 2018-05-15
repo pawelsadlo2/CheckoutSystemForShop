@@ -27,9 +27,7 @@ object CheckoutSystem {
     List.fill(noOfOrangesAfterPromo)("Orange")
   }
 
-  def main(args: Array[String]): Unit = {
-    val boughtProducts: List[String] = List("Apple", "Apple", "Orange", "Apple")
-
+  def costWithAppliedOffers(boughtProducts: List[String]): Future[BigDecimal] = {
     val noOfApples = boughtProducts.count(_ == "Apple")
     val noOfOranges = boughtProducts.count(_ == "Orange")
 
@@ -42,8 +40,18 @@ object CheckoutSystem {
       totalCost <- costOfProducts(apples ++ oranges)
     } yield totalCost
 
+    result
+  }
+
+  def printWithPoundSign(value: BigDecimal): String = "\u00a3" + value
+
+  def main(args: Array[String]): Unit = {
+    val boughtProducts: List[String] = List("Apple", "Apple", "Orange", "Apple")
+
+    val result = costWithAppliedOffers(boughtProducts)
+
     result.onComplete{
-      case Success(cost) => println("[" + boughtProducts.mkString(", ") + "] => " + "\u00a3" + cost)
+      case Success(cost) => println("[" + boughtProducts.mkString(", ") + "] => " + printWithPoundSign(cost))
       case Failure(e) => println("Something goes wrong " + e)
     }
   }
